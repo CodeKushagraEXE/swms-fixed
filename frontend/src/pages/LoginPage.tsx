@@ -20,7 +20,12 @@ export default function LoginPage() {
       toast.success(`Welcome back, ${data.name}!`);
       navigate('/dashboard');
     } catch (err: any) {
-      toast.error(err.response?.data?.message || 'Invalid credentials');
+      const msg =
+        err.response?.data?.message ||
+        (err.code === 'ERR_NETWORK' || !err.response
+          ? 'Cannot reach API. Set VITE_BACKEND_URL on Vercel to your deployed backend URL.'
+          : 'Invalid credentials');
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

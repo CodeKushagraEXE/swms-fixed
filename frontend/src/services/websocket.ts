@@ -1,5 +1,6 @@
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { wsURL } from '../config/env';
 
 class WebSocketService {
   private client: Client | null = null;
@@ -9,7 +10,7 @@ class WebSocketService {
   connect(token: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client = new Client({
-        webSocketFactory: () => new SockJS('/ws'),
+        webSocketFactory: () => new SockJS(wsURL),
         connectHeaders: { Authorization: `Bearer ${token}` },
         onConnect: () => { this.resubscribeAll(); resolve(); },
         onStompError: reject,
