@@ -1,0 +1,3 @@
+#!/bin/sh
+# Maven Wrapper - falls back to system mvn if wrapper jar not present
+exec mvn "$@"
