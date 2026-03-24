@@ -1,0 +1,13 @@
+# https://render.com/docs/blueprint-spec
+# After deploy: copy the service URL (https://<name>.onrender.com) and set Vercel env BACKEND_URL to that value (no trailing slash).
+services:
+  - type: web
+    name: swms-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api-docs
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: demo

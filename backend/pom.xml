@@ -54,11 +54,11 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- H2 for testing -->
+    <!-- H2: tests + demo profile (cloud deploy without MySQL) -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-      <scope>test</scope>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- JWT -->

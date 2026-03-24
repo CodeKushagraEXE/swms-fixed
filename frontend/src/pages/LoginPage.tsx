@@ -23,7 +23,7 @@ export default function LoginPage() {
       const msg =
         err.response?.data?.message ||
         (err.code === 'ERR_NETWORK' || !err.response
-          ? 'Cannot reach API. Set VITE_BACKEND_URL on Vercel to your deployed backend URL.'
+          ? 'Cannot reach API. Set BACKEND_URL on Vercel to your Spring API (see render.yaml).'
           : 'Invalid credentials');
       toast.error(msg);
     } finally {
