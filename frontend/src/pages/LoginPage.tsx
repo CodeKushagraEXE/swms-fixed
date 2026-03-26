@@ -77,13 +77,12 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* FIX #5: Removed duplicate line, now shows all 3 demo accounts with click-to-fill */}
+          {/* Demo accounts with click-to-fill */}
           <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg space-y-1">
             <p className="text-xs text-blue-700 dark:text-blue-300 font-medium mb-2">
               Demo accounts — click to fill:
             </p>
             {[
-              { email: 'admin@swms.com',   password: 'admin123',   role: 'Admin'   },
               { email: 'manager@swms.com', password: 'manager123', role: 'Manager' },
               { email: 'dev@swms.com',     password: 'dev123',     role: 'Employee'},
             ].map(acc => (
