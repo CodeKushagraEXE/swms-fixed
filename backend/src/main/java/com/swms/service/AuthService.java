@@ -31,8 +31,12 @@ public class AuthService {
             .active(true)
             .build();
         user = userRepo.save(user);
-        logService.log(ActivityLog.ActionType.USER_REGISTERED, "User", user.getId(),
-            "User registered: " + user.getName(), null, null, user, null);
+        try {
+            logService.log(ActivityLog.ActionType.USER_REGISTERED, "User", user.getId(),
+                "User registered: " + user.getName(), null, null, user, null);
+        } catch (Exception ignored) {
+            // Never fail signup if audit logging has an internal issue.
+        }
         String token = jwtUtils.generateJwtToken(user.getEmail());
         return new Dtos.AuthResponse(token, user.getId(), user.getName(), user.getEmail(), user.getRole());
     }
