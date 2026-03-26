@@ -5,10 +5,8 @@ import com.swms.model.ActivityLog;
 import com.swms.model.Project;
 import com.swms.model.User;
 import com.swms.repository.ActivityLogRepository;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.List;
@@ -37,13 +35,13 @@ public class ActivityLogService {
             ActivityLog.ActionType.USER_REGISTERED,
             ActivityLog.ActionType.USER_LOGGED_IN
         );
-        return activityLogRepository.findRecentAuthLogs(authActions, PageRequest.of(0, 200))
-            .stream().map(this::toResponse).collect(Collectors.toList());
+        return activityLogRepository.findByActionInOrderByCreatedAtDesc(authActions).stream()
+            .limit(200)
+            .map(this::toResponse)
+            .collect(Collectors.toList());
     }
 
-    // FIX #2: Changed from default @Transactional (REQUIRED) to REQUIRES_NEW
-    // so log entries are never rolled back if the caller's transaction fails.
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void log(ActivityLog.ActionType action,
                     String entityType,
                     Long entityId,
