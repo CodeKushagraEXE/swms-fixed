@@ -31,13 +31,9 @@ public class AuthService {
             .active(true)
             .build();
         user = userRepo.save(user);
-        try {
-            // Use detached audit write and avoid FK dependence on uncommitted user row.
-            logService.log(ActivityLog.ActionType.USER_REGISTERED, "User", user.getId(),
-                "User registered: " + user.getName() + " (" + user.getEmail() + ")", null, null, null, null);
-        } catch (Exception ignored) {
-            // Never fail signup if audit logging has an internal issue.
-        }
+        // NOTE: USER_REGISTERED audit insert is intentionally disabled here because
+        // some existing deployed DB schemas enforce constraints that can fail this write
+        // and break registration flow. Login audit remains enabled.
         String token = jwtUtils.generateJwtToken(user.getEmail());
         return new Dtos.AuthResponse(token, user.getId(), user.getName(), user.getEmail(), user.getRole());
     }
