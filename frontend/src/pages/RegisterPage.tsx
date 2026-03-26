@@ -16,7 +16,8 @@ export default function RegisterPage() {
     if (form.password.length < 6) { toast.error('Password must be at least 6 characters'); return; }
     setLoading(true);
     try {
-      const { data } = await authApi.register(form);
+      const payload = { ...form, role: form.role.toUpperCase() };
+      const { data } = await authApi.register(payload);
       dispatch(setCredentials(data));
       toast.success(`Welcome to SWMS, ${data.name}!`);
       navigate('/dashboard');
