@@ -5,6 +5,7 @@ import com.swms.model.ActivityLog;
 import com.swms.model.Project;
 import com.swms.model.User;
 import com.swms.repository.ActivityLogRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -36,7 +37,7 @@ public class ActivityLogService {
             ActivityLog.ActionType.USER_REGISTERED,
             ActivityLog.ActionType.USER_LOGGED_IN
         );
-        return activityLogRepository.findTop200ByActionInOrderByCreatedAtDesc(authActions)
+        return activityLogRepository.findRecentAuthLogs(authActions, PageRequest.of(0, 200))
             .stream().map(this::toResponse).collect(Collectors.toList());
     }
 
