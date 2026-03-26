@@ -7,6 +7,7 @@ import com.swms.model.User;
 import com.swms.repository.ActivityLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +42,7 @@ public class ActivityLogService {
             .collect(Collectors.toList());
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void log(ActivityLog.ActionType action,
                     String entityType,
                     Long entityId,

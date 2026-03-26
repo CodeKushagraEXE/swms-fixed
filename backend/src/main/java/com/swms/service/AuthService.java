@@ -32,8 +32,9 @@ public class AuthService {
             .build();
         user = userRepo.save(user);
         try {
+            // Use detached audit write and avoid FK dependence on uncommitted user row.
             logService.log(ActivityLog.ActionType.USER_REGISTERED, "User", user.getId(),
-                "User registered: " + user.getName(), null, null, user, null);
+                "User registered: " + user.getName() + " (" + user.getEmail() + ")", null, null, null, null);
         } catch (Exception ignored) {
             // Never fail signup if audit logging has an internal issue.
         }
