@@ -43,7 +43,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneral(Exception ex) {
+        String msg = ex.getMessage();
+        if (msg == null || msg.isBlank()) msg = ex.getClass().getSimpleName();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(new ErrorResponse(500, "Internal server error"));
+            .body(new ErrorResponse(500, "Internal server error: " + msg));
     }
 }
