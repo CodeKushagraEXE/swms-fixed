@@ -45,6 +45,9 @@ export const tasksApi = {
     api.delete(`/tasks/${taskId}/dependency/${dependsOnId}`),
 };
 export const dashboardApi = { getStats: () => api.get('/dashboard/stats') };
-export const logsApi = { getProjectLogs: (pid: number) => api.get(`/logs/project/${pid}`) };
+export const logsApi = {
+  getProjectLogs: (pid: number) => api.get(`/logs/project/${pid}`),
+  getAuthLogs: () => api.get('/admin/logs/auth'),
+};
 export const usersApi = { getAll: () => api.get('/users') };
 export default api;

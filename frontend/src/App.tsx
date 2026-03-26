@@ -9,6 +9,7 @@ import DashboardPage from './pages/DashboardPage';
 import ProjectsPage from './pages/ProjectsPage';
 import KanbanPage from './pages/KanbanPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
+import AuthAuditPage from './pages/AuthAuditPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAppSelector(s => s.auth.isAuthenticated);
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="projects" element={<ProjectsPage />} />
           <Route path="projects/:id" element={<ProjectDetailPage />} />
           <Route path="projects/:id/board" element={<KanbanPage />} />
+          <Route path="admin/auth-audit" element={<AuthAuditPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,16 @@ public class ActivityLogService {
     @Transactional(readOnly = true)
     public List<ActivityLogResponse> getRecentProjectLogs(Long projectId) {
         return activityLogRepository.findTop50ByProjectIdOrderByCreatedAtDesc(projectId)
+            .stream().map(this::toResponse).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ActivityLogResponse> getRecentAuthLogs() {
+        var authActions = Arrays.asList(
+            ActivityLog.ActionType.USER_REGISTERED,
+            ActivityLog.ActionType.USER_LOGGED_IN
+        );
+        return activityLogRepository.findTop200ByActionInOrderByCreatedAtDesc(authActions)
             .stream().map(this::toResponse).collect(Collectors.toList());
     }
 

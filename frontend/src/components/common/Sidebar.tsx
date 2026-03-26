@@ -9,6 +9,9 @@ const navItems = [
 export default function Sidebar() {
   const sidebarOpen = useAppSelector(s => s.ui.sidebarOpen);
   const user = useAppSelector(s => s.auth.user);
+  const items = user?.role === 'ADMIN'
+    ? [...navItems, { to: '/admin/auth-audit', icon: '🔐', label: 'Auth Audit' }]
+    : navItems;
 
   return (
     <aside className={`${sidebarOpen ? 'w-64' : 'w-16'} bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-all duration-300 shrink-0`}>
@@ -27,7 +30,7 @@ export default function Sidebar() {
       </div>
 
       <nav className="flex-1 p-3 space-y-1">
-        {navItems.map(item => (
+        {items.map(item => (
           <NavLink
             key={item.to}
             to={item.to}

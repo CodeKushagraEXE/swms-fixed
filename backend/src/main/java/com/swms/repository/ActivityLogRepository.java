@@ -10,4 +10,5 @@ public interface ActivityLogRepository extends JpaRepository<ActivityLog, Long> 
     Page<ActivityLog> findByProjectIdOrderByCreatedAtDesc(Long projectId, Pageable pageable);
     List<ActivityLog> findTop50ByProjectIdOrderByCreatedAtDesc(Long projectId);
     List<ActivityLog> findTop20ByUserIdOrderByCreatedAtDesc(Long userId);
+    List<ActivityLog> findTop200ByActionInOrderByCreatedAtDesc(List<ActivityLog.ActionType> actions);
 }
