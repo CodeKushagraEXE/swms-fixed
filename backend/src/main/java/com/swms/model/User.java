@@ -1,5 +1,6 @@
 package com.swms.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -49,6 +50,12 @@ public class User {
     private Set<Project> memberProjects = new HashSet<>();
 
     public enum Role {
-        ADMIN, MANAGER, EMPLOYEE
+        ADMIN, MANAGER, EMPLOYEE;
+
+        @JsonCreator
+        public static Role fromValue(String value) {
+            if (value == null || value.isBlank()) return EMPLOYEE;
+            return Role.valueOf(value.trim().toUpperCase());
+        }
     }
 }
